@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "/home/Coder/.nuget/packages/": {}
+    "C:\\Users\\valec\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/Coder/Escritorio/valeria/petmanagment/petmanagment/petmanagment.csproj",
+      "projectUniqueName": "C:\\Users\\valec\\OneDrive\\Escritorio\\c#\\project\\petmanagment\\petmanagment.csproj",
       "projectName": "petmanagment",
-      "projectPath": "/home/Coder/Escritorio/valeria/petmanagment/petmanagment/petmanagment.csproj",
-      "packagesPath": "/home/Coder/.nuget/packages/",
-      "outputPath": "/home/Coder/Escritorio/valeria/petmanagment/petmanagment/obj/",
+      "projectPath": "C:\\Users\\valec\\OneDrive\\Escritorio\\c#\\project\\petmanagment\\petmanagment.csproj",
+      "packagesPath": "C:\\Users\\valec\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\valec\\OneDrive\\Escritorio\\c#\\project\\petmanagment\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/Coder/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\valec\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -38,7 +38,13 @@
         "warnAsError": [
           "NU1605"
         ]
-      }
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -54,12 +60,30 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[8.0.20, 8.0.20]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[8.0.20, 8.0.20]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[8.0.20, 8.0.20]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[8.0.20, 8.0.20]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.119/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Users\\valec\\.dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
