@@ -1,0 +1,15 @@
+C:\Users\valec\OneDrive\Escritorio\c#\project\petmanagment\bin\Debug\net8.0\petmanagment.exe
+C:\Users\valec\OneDrive\Escritorio\c#\project\petmanagment\bin\Debug\net8.0\petmanagment.deps.json
+C:\Users\valec\OneDrive\Escritorio\c#\project\petmanagment\bin\Debug\net8.0\petmanagment.runtimeconfig.json
+C:\Users\valec\OneDrive\Escritorio\c#\project\petmanagment\bin\Debug\net8.0\petmanagment.dll
+C:\Users\valec\OneDrive\Escritorio\c#\project\petmanagment\bin\Debug\net8.0\petmanagment.pdb
+C:\Users\valec\OneDrive\Escritorio\c#\project\petmanagment\obj\Debug\net8.0\petmanagment.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\valec\OneDrive\Escritorio\c#\project\petmanagment\obj\Debug\net8.0\petmanagment.AssemblyInfoInputs.cache
+C:\Users\valec\OneDrive\Escritorio\c#\project\petmanagment\obj\Debug\net8.0\petmanagment.AssemblyInfo.cs
+C:\Users\valec\OneDrive\Escritorio\c#\project\petmanagment\obj\Debug\net8.0\petmanagment.csproj.CoreCompileInputs.cache
+C:\Users\valec\OneDrive\Escritorio\c#\project\petmanagment\obj\Debug\net8.0\petmanagment.sourcelink.json
+C:\Users\valec\OneDrive\Escritorio\c#\project\petmanagment\obj\Debug\net8.0\petmanagment.dll
+C:\Users\valec\OneDrive\Escritorio\c#\project\petmanagment\obj\Debug\net8.0\refint\petmanagment.dll
+C:\Users\valec\OneDrive\Escritorio\c#\project\petmanagment\obj\Debug\net8.0\petmanagment.pdb
+C:\Users\valec\OneDrive\Escritorio\c#\project\petmanagment\obj\Debug\net8.0\petmanagment.genruntimeconfig.cache
+C:\Users\valec\OneDrive\Escritorio\c#\project\petmanagment\obj\Debug\net8.0\ref\petmanagment.dll
