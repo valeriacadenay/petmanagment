@@ -1,13 +1,18 @@
 ﻿
 using petmanagment.Models;
 using petmanagment.Services;
+using petmanagment.Models.Interface;
 
-List<Paciente> pacients = new List<Paciente>();
-bool flag = false;
 
-while (!flag)
+List<Patient> pacients = new List<Patient>();
+bool flag = true;
+
+ConsoleInterface.ShowTitle("Pet Health Clinic");
+
+while (flag)
 {
-    Console.WriteLine("\n=== MENU ===");
+    Console.WriteLine("");
+    Console.WriteLine("------------ MAIN MENU ------------");
     Console.WriteLine("1. Register patient");
     Console.WriteLine("2. List patients");
     Console.WriteLine("3. Search for patient");
@@ -19,19 +24,19 @@ while (!flag)
     switch (option)
     {
         case "1":
-            PacienteService.RegistrarPaciente(pacients);
+            PatientService.RegisterPatient(pacients);
             break;
         case "2":
-            PacienteService.ListarPacientes(pacients);
+            PatientService.ListPatients(pacients);
             break;
         case "3":
             Console.Write("Enter the name of the pacient ");
             string name = Console.ReadLine();
-            PacienteService.BuscarPacientePorNombre(pacients, name);
+            PatientService.SearchPatientByName(pacients, name);
             break;
         case "4":
-            flag = true;
-            Console.WriteLine("Leaving the system ... ");
+            flag = false;
+            ConsoleInterface.ShowFoot("Thanks for using the system");
             break;
         default:
             Console.WriteLine("Please input a valid option, try again");

@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\valec\\.nuget\\packages\\": {}
+    "/home/Coder/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\valec\\OneDrive\\Escritorio\\c#\\project\\petmanagment\\petmanagment.csproj",
+      "projectUniqueName": "/home/Coder/Escritorio/valeria/petmanagment/petmanagment/petmanagment.csproj",
       "projectName": "petmanagment",
-      "projectPath": "C:\\Users\\valec\\OneDrive\\Escritorio\\c#\\project\\petmanagment\\petmanagment.csproj",
-      "packagesPath": "C:\\Users\\valec\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\valec\\OneDrive\\Escritorio\\c#\\project\\petmanagment\\obj\\",
+      "projectPath": "/home/Coder/Escritorio/valeria/petmanagment/petmanagment/petmanagment.csproj",
+      "packagesPath": "/home/Coder/.nuget/packages/",
+      "outputPath": "/home/Coder/Escritorio/valeria/petmanagment/petmanagment/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\valec\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/Coder/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -38,11 +38,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -64,7 +59,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.413/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.119/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
