@@ -7,25 +7,13 @@ namespace petmanagment.Services
 {
     public class PatientService
     {
-        public static void RegisterPatient(List<Patient> patientList)
+        public static void RegisterPatient(Dictionary<int, Patient> patientDict, List<Owner> owners, ref int patientIdCounter)
         {
             try
             {
+                // Data of the pacient
                 Console.Write("Enter patient's first name: ");
                 string name = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(name))
-                {
-                    Console.WriteLine("Name cannot be empty");
-                    return;
-                }
-
-                Console.Write("Enter patient's last name: ");
-                string lastName = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(lastName))
-                {
-                    Console.WriteLine("Last name cannot be empty");
-                    return;
-                }
 
                 Console.Write("Enter patient's age: ");
                 if (!int.TryParse(Console.ReadLine(), out int age) || age <= 0)
@@ -36,32 +24,54 @@ namespace petmanagment.Services
 
                 Console.Write("Enter patient's specie: ");
                 string specie = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(specie))
-                {
-                    Console.WriteLine("Specie cannot be empty");
-                    return;
-                }
 
                 Console.Write("Enter patient's race: ");
                 string race = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(race))
-                {
-                    Console.WriteLine("Race cannot be empty");
-                    return;
-                }
 
                 Console.Write("Enter patient's symptoms: ");
                 string symptoms = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(symptoms))
+
+                // Data of the owner
+                
+                Console.WriteLine("-------------------------------------------");
+                Console.WriteLine("       Enter owner's information:");
+
+                Console.Write("Owner's first name: ");
+                string ownerName = Console.ReadLine();
+
+                Console.Write("Owner's last name: ");
+                string ownerLastName = Console.ReadLine();
+
+                Console.Write("Owner's age: ");
+                int.TryParse(Console.ReadLine(), out int ownerAge);
+
+                Console.Write("Owner's email: ");
+                string ownerEmail = Console.ReadLine();
+
+                Console.Write("Owner's phone: ");
+                string ownerPhone = Console.ReadLine();
+
+                // Verify if the owner already exist
+                Owner existingOwner = owners.FirstOrDefault(o => o.Email.Equals(ownerEmail, StringComparison.OrdinalIgnoreCase));
+
+                Owner owner;
+                if (existingOwner != null)
                 {
-                    Console.WriteLine("Symptoms cannot be empty");
-                    return;
+                    owner = existingOwner;
+                    Console.WriteLine("Owner already exists, linking existing owner to patient.");
+                }
+                else
+                {
+                    owner = new Owner(ownerName, ownerLastName, ownerAge, ownerEmail, ownerPhone);
+                    owners.Add(owner);
                 }
 
-                Patient newPatient = new Patient(name, lastName, age, specie, race, symptoms);
+                // Create and add a new patient
+                Patient newPatient = new Patient(name, age, specie, race, symptoms, owner);
+                int newPatientId = patientIdCounter++;
+                patientDict[newPatientId] = newPatient;
 
-                patientList.Add(newPatient);
-                Console.WriteLine("Patient registered successfully");
+                Console.WriteLine($"Patient registered successfully with ID: {newPatientId}");
             }
             catch (Exception ex)
             {
@@ -69,32 +79,86 @@ namespace petmanagment.Services
             }
         }
 
-        public static void ListPatients(List<Patient> patientList)
+
+
+        public static void ListPatients(Dictionary<int, Patient> patientDict)
         {
-            if (patientList.Count == 0)
+            if (patientDict.Count == 0)
             {
                 Console.WriteLine("There are no patients registered.");
                 return;
             }
 
             Console.WriteLine("List of patients:");
-            foreach (var patient in patientList)
+            foreach (var p in patientDict)
             {
-                Console.WriteLine($"{patient.Name} {patient.LastName}, Age: {patient.Age}, Specie: {patient.Specie}, Race: {patient.Race}, Symptoms: {patient.Symptoms}");
+                Patient patient = p.Value;
+
+                Console.WriteLine("-------------------------------------------------");
+                Console.WriteLine($"Patient Name: {patient.Name}");
+                Console.WriteLine($"Age: {patient.Age}");
+                Console.WriteLine($"Specie: {patient.Specie}");
+                Console.WriteLine($"Race: {patient.Race}");
+                Console.WriteLine($"Symptoms: {patient.Symptoms}");
+
+                if (patient.Owner != null)
+                {
+                    Console.WriteLine("--- Owner Information ---");
+                    Console.WriteLine($"Name: {patient.Owner.Name} {patient.Owner.LastName}");
+                    Console.WriteLine($"Age: {patient.Owner.Age}");
+                    Console.WriteLine($"Email: {patient.Owner.Email}");
+                    Console.WriteLine($"Phone: {patient.Owner.Phone}");
+                }
+                else
+                {
+                    Console.WriteLine("Owner information not available.");
+                }
             }
+            Console.WriteLine("-------------------------------------------------");
         }
 
-        public static void SearchPatientByName(List<Patient> listaPacientes, string name)
+
+
+        public static void SearchPatientById(Dictionary<int, Patient> patientDict, int id)
         {
-            var patient = listaPacientes.FirstOrDefault(p => string.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase));
-            if (patient != null)
+            if (patientDict.TryGetValue(id, out Patient patient))
             {
-                Console.WriteLine($"Patient found: {patient.Name} {patient.LastName}, Age: {patient.Age}");
+                Console.WriteLine($"Patient found: {patient.Name}, Age: {patient.Age}");
+                Console.WriteLine($"Specie: {patient.Specie}, Race: {patient.Race}");
+                Console.WriteLine($"Symptoms: {patient.Symptoms}");
+
+                if (patient.Owner != null)
+                {
+                    Console.WriteLine("--- Owner Information ---");
+                    Console.WriteLine($"Name: {patient.Owner.Name} {patient.Owner.LastName}");
+                    Console.WriteLine($"Email: {patient.Owner.Email}");
+                    Console.WriteLine($"Phone: {patient.Owner.Phone}");
+                }
             }
             else
             {
-                Console.WriteLine("Patient not found");
+                Console.WriteLine("Patient not found with that ID.");
             }
         }
+
+        public static void SearchPatientByAgeOrSpecies(Dictionary<int, Patient> patientDict, int? edad = null, string especie = null)
+        {
+            var resultado = patientDict.Where(p => 
+                (!edad.HasValue || p.Value.Age == edad.Value) &&
+                (string.IsNullOrEmpty(especie) || p.Value.Specie.Equals(especie, StringComparison.OrdinalIgnoreCase))
+            );
+
+            if (!resultado.Any())
+            {
+                Console.WriteLine("No patients found with the given criteria.");
+                return;
+            }
+
+            foreach(var paciente in resultado)
+            {
+                Console.WriteLine($"Nombre: {paciente.Value.Name}, Edad: {paciente.Value.Age}, Especie: {paciente.Value.Specie}");
+            }
+        }
+        
     }
 }
