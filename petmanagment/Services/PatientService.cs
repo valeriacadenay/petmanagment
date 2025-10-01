@@ -1,29 +1,27 @@
 ﻿using petmanagment.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 
 namespace petmanagment.Services
 {
     public class PatientService
     {
-        public static void RegisterPatient(Dictionary<int, Patient> patientDict, List<Owner> owners, ref int patientIdCounter)
+       public static Patient RegisterPatient(List<Patient> patientList, Dictionary<int, Patient> patientDict, List<Owner> owners, ref int patientIdCounter)
         {
             try
             {
-                // Data of the pacient
+                // Datos del paciente
                 Console.Write("Enter patient's first name: ");
                 string name = Console.ReadLine();
 
                 Console.Write("Enter patient's age: ");
                 if (!int.TryParse(Console.ReadLine(), out int age) || age <= 0)
                 {
-                    Console.WriteLine("Please enter a valid age");
-                    return;
+                    Console.WriteLine("Please enter a valid age.");
+                    return null;
                 }
 
                 Console.Write("Enter patient's specie: ");
-                string specie = Console.ReadLine();
+                string specie = Console.ReadLine()?.ToLower() ?? "";
 
                 Console.Write("Enter patient's race: ");
                 string race = Console.ReadLine();
@@ -31,8 +29,7 @@ namespace petmanagment.Services
                 Console.Write("Enter patient's symptoms: ");
                 string symptoms = Console.ReadLine();
 
-                // Data of the owner
-                
+                // Datos del dueño
                 Console.WriteLine("-------------------------------------------");
                 Console.WriteLine("       Enter owner's information:");
 
@@ -43,7 +40,11 @@ namespace petmanagment.Services
                 string ownerLastName = Console.ReadLine();
 
                 Console.Write("Owner's age: ");
-                int.TryParse(Console.ReadLine(), out int ownerAge);
+                if (!int.TryParse(Console.ReadLine(), out int ownerAge) || ownerAge <= 0)
+                {
+                    Console.WriteLine("Please enter a valid owner age.");
+                    return null;
+                }
 
                 Console.Write("Owner's email: ");
                 string ownerEmail = Console.ReadLine();
@@ -51,10 +52,10 @@ namespace petmanagment.Services
                 Console.Write("Owner's phone: ");
                 string ownerPhone = Console.ReadLine();
 
-                // Verify if the owner already exist
+                // Verificar si el dueño ya existe por email
                 Owner existingOwner = owners.FirstOrDefault(o => o.Email.Equals(ownerEmail, StringComparison.OrdinalIgnoreCase));
-
                 Owner owner;
+
                 if (existingOwner != null)
                 {
                     owner = existingOwner;
@@ -66,99 +67,72 @@ namespace petmanagment.Services
                     owners.Add(owner);
                 }
 
-                // Create and add a new patient
+                // Asignar ID y crear paciente
+                int newPatientId = patientIdCounter;
+                patientIdCounter++;
+
                 Patient newPatient = new Patient(name, age, specie, race, symptoms, owner);
-                int newPatientId = patientIdCounter++;
+                patientList.Add(newPatient);
                 patientDict[newPatientId] = newPatient;
 
                 Console.WriteLine($"Patient registered successfully with ID: {newPatientId}");
+                Console.Write("The animal makes a generic sound: ");
+                newPatient.EmitSound();
+
+                return newPatient;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
+                return null;
             }
         }
-
-
 
         public static void ListPatients(Dictionary<int, Patient> patientDict)
         {
             if (patientDict.Count == 0)
             {
-                Console.WriteLine("There are no patients registered.");
+                Console.WriteLine("No patients registered.");
                 return;
             }
 
             Console.WriteLine("List of patients:");
-            foreach (var p in patientDict)
+            foreach (var kvp in patientDict)
             {
-                Patient patient = p.Value;
-
-                Console.WriteLine("-------------------------------------------------");
-                Console.WriteLine($"Patient Name: {patient.Name}");
-                Console.WriteLine($"Age: {patient.Age}");
-                Console.WriteLine($"Specie: {patient.Specie}");
-                Console.WriteLine($"Race: {patient.Race}");
-                Console.WriteLine($"Symptoms: {patient.Symptoms}");
-
-                if (patient.Owner != null)
-                {
-                    Console.WriteLine("--- Owner Information ---");
-                    Console.WriteLine($"Name: {patient.Owner.Name} {patient.Owner.LastName}");
-                    Console.WriteLine($"Age: {patient.Owner.Age}");
-                    Console.WriteLine($"Email: {patient.Owner.Email}");
-                    Console.WriteLine($"Phone: {patient.Owner.Phone}");
-                }
-                else
-                {
-                    Console.WriteLine("Owner information not available.");
-                }
+                Console.WriteLine($"ID: {kvp.Key}, Name: {kvp.Value.Name}, Age: {kvp.Value.Age}, Specie: {kvp.Value.Specie}");
             }
-            Console.WriteLine("-------------------------------------------------");
         }
-
-
 
         public static void SearchPatientById(Dictionary<int, Patient> patientDict, int id)
         {
             if (patientDict.TryGetValue(id, out Patient patient))
             {
-                Console.WriteLine($"Patient found: {patient.Name}, Age: {patient.Age}");
-                Console.WriteLine($"Specie: {patient.Specie}, Race: {patient.Race}");
-                Console.WriteLine($"Symptoms: {patient.Symptoms}");
-
-                if (patient.Owner != null)
-                {
-                    Console.WriteLine("--- Owner Information ---");
-                    Console.WriteLine($"Name: {patient.Owner.Name} {patient.Owner.LastName}");
-                    Console.WriteLine($"Email: {patient.Owner.Email}");
-                    Console.WriteLine($"Phone: {patient.Owner.Phone}");
-                }
+                Console.WriteLine($"Patient found: {patient.Name}, Age: {patient.Age}, Specie: {patient.Specie}, Owner: {patient.Owner.Name} {patient.Owner.LastName}");
             }
             else
             {
-                Console.WriteLine("Patient not found with that ID.");
+                Console.WriteLine("Patient not found with the given ID.");
             }
         }
 
-        public static void SearchPatientByAgeOrSpecies(Dictionary<int, Patient> patientDict, int? edad = null, string especie = null)
+        public static void SearchPatientByAgeOrSpecies(Dictionary<int, Patient> patientDict, int? age, string specie)
         {
-            var resultado = patientDict.Where(p => 
-                (!edad.HasValue || p.Value.Age == edad.Value) &&
-                (string.IsNullOrEmpty(especie) || p.Value.Specie.Equals(especie, StringComparison.OrdinalIgnoreCase))
+            var result = patientDict.Where(p =>
+                (age != null && p.Value.Age == age) ||
+                (!string.IsNullOrEmpty(specie) && p.Value.Specie.Equals(specie, StringComparison.OrdinalIgnoreCase))
             );
 
-            if (!resultado.Any())
+            if (!result.Any())
             {
-                Console.WriteLine("No patients found with the given criteria.");
-                return;
+                Console.WriteLine("No matching patients found.");
             }
-
-            foreach(var paciente in resultado)
+            else
             {
-                Console.WriteLine($"Nombre: {paciente.Value.Name}, Edad: {paciente.Value.Age}, Especie: {paciente.Value.Specie}");
+                foreach (var entry in result)
+                {
+                    Console.WriteLine($"ID: {entry.Key}, Name: {entry.Value.Name}, Age: {entry.Value.Age}, Specie: {entry.Value.Specie}");
+                }
             }
         }
-        
     }
 }

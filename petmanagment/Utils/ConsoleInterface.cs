@@ -5,7 +5,7 @@ public class ConsoleInterface
     public static void ShowTitle(string title)
     {
         Console.Clear();
-        Console.ForegroundColor = ConsoleColor.Red;
+        Console.ForegroundColor = ConsoleColor.DarkBlue;
         Console.WriteLine("======================================================");
         Console.WriteLine($"                 {title.ToUpper()}");
         Console.WriteLine("======================================================");
@@ -24,7 +24,7 @@ public class ConsoleInterface
 
     public static void ShowSeparator()
     {
-        Console.ForegroundColor = ConsoleColor.Red;
+        Console.ForegroundColor = ConsoleColor.DarkBlue;
         Console.WriteLine("-------------------------------------------------");
         Console.ResetColor();
     }
