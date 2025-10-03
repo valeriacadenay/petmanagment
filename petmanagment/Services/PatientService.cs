@@ -1,23 +1,22 @@
 ﻿using petmanagment.Interfaces;
 using petmanagment.Models;
 
-
 namespace petmanagment.Services
 {
     public class PatientService : IRegistrable
     {
-        private List<Patient> _patientList;
-        private Dictionary<int, Patient> _patientDict;
-        private List<Owner> _owners;
-        private int _patientIdCounter;
-
-        public PatientService(List<Patient> patientList, Dictionary<int, Patient> patientDict, List<Owner> owners,
-            int startingPatientId)
+        public List<Patient> _patientList;
+        public Dictionary<int, Patient?> _patientDict;
+        public List<Owner> _owners;
+        public int _patientIdCounter;
+        
+        
+        public PatientService(List<Patient> patientList, Dictionary<int, Patient> patientDict, List<Owner> owners)
         {
             _patientList = patientList;
             _patientDict = patientDict;
             _owners = owners;
-            _patientIdCounter = startingPatientId;
+            _patientIdCounter = 1; // Se puede iniciar en 1
         }
 
         public void Register()
@@ -63,11 +62,11 @@ namespace petmanagment.Services
                 Console.Write("Owner's phone: ");
                 string ownerPhone = Console.ReadLine();
 
-                // Verify if the owner already exits in the database
-                Owner existingOwner =
-                    _owners.FirstOrDefault(o => o.Email.Equals(ownerEmail, StringComparison.OrdinalIgnoreCase));
-                Owner owner;
+                // Buscar dueño existente
+                Owner existingOwner = _owners.FirstOrDefault(o =>
+                    o.Email.Equals(ownerEmail, StringComparison.OrdinalIgnoreCase));
 
+                Owner owner;
                 if (existingOwner != null)
                 {
                     owner = existingOwner;
@@ -79,9 +78,9 @@ namespace petmanagment.Services
                     _owners.Add(owner);
                 }
 
-                // Create and asing patiend Id
                 int newPatientId = _patientIdCounter++;
                 Patient newPatient = new Patient(name, age, specie, race, owner);
+
                 _patientList.Add(newPatient);
                 _patientDict[newPatientId] = newPatient;
 
@@ -104,23 +103,25 @@ namespace petmanagment.Services
             }
 
             Console.WriteLine("List of patients:");
-            foreach (var kvp in _patientDict)
+            foreach (var patient in _patientDict)
             {
                 Console.WriteLine(
-                    $"ID: {kvp.Key}, Name: {kvp.Value.Name}, Age: {kvp.Value.Age}, Specie: {kvp.Value.Specie}");
+                    $"ID: {patient.Key}, Name: {patient.Value.Name}, Age: {patient.Value.Age}, Specie: {patient.Value.Specie}");
             }
         }
 
-        public void SearchPatientById(int id)
+        public Patient SearchPatientById(int id)
         {
             if (_patientDict.TryGetValue(id, out Patient patient))
             {
                 Console.WriteLine(
                     $"Patient found: {patient.Name}, Age: {patient.Age}, Specie: {patient.Specie}, Owner: {patient.Owner.Name} {patient.Owner.LastName}");
+                return patient;
             }
             else
             {
                 Console.WriteLine("Patient not found with the given ID.");
+                return null;
             }
         }
 
@@ -146,4 +147,3 @@ namespace petmanagment.Services
         }
     }
 }
-

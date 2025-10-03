@@ -2,7 +2,7 @@ using petmanagment.Services;
 
 namespace petmanagment.Models;
 
-public class GeneralConsulting : VeterinaryService
+public abstract class GeneralConsulting : VeterinaryService
 {
     public Patient Patient { get; set; }
     public string ReasonForVisit { get; set; }
@@ -17,9 +17,4 @@ public class GeneralConsulting : VeterinaryService
         this.Cost = 150.00m; // Precio estándar de consulta
     }
 
-    public override void Attend()
-    {
-        VeterinaryService consulta = new GeneralConsultation();
-        consulta.Attend();
-    }
 }

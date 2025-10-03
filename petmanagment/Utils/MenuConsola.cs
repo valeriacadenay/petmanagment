@@ -10,10 +10,10 @@ public class MenuConsola
         Console.WriteLine("------------ MAIN MENU ------------");
         Console.WriteLine("1. Register patient");
         Console.WriteLine("2. List patients");
-        Console.WriteLine("3. Search for patient");
-        Console.WriteLine("4. Search a patient by age or species");
+        Console.WriteLine("3. Search patient by ID");
+        Console.WriteLine("4. Search patients by Age or Species");
         Console.WriteLine("5. Request a veterinary service");
-        Console.WriteLine("6. Exit");
+        Console.WriteLine("0. Exit");
         Console.Write("Select an option: ");
     }
 
