@@ -3,48 +3,38 @@ using petmanagment.Models;
 using petmanagment.Models.Interface;
 using petmanagment.Services;
 
+// Estructuras de datos
 List<Patient> patients = new List<Patient>();
 Dictionary<int, Patient> patientDict = new Dictionary<int, Patient>();
 List<Owner> owners = new List<Owner>();
-int patientIdCounter = 1; // empieza desde 1
+int patientIdCounter = 1;
 
-bool flag = true;
+// Crear instancia de servicio con las estructuras compartidas
+PatientService patientService = new PatientService(patients, patientDict, owners, patientIdCounter);
 
 ConsoleInterface.ShowTitle("Pet Health Clinic");
 
-while (flag)
+while (true)
         {
-            Console.WriteLine();
-            Console.WriteLine("------------ MAIN MENU ------------");
-            Console.WriteLine("1. Register patient");
-            Console.WriteLine("2. List patients");
-            Console.WriteLine("3. Search for patient by ID");
-            Console.WriteLine("4. Search for patient by age or species");
-            Console.WriteLine("5. Exit");
-            Console.Write("Select an option: ");
-
+            MenuConsola.ShowMenu();
+            
             string option = Console.ReadLine();
 
             switch (option)
             {
                 case "1":
-                    Patient newPatient = PatientService.RegisterPatient(patients, patientDict, owners, ref patientIdCounter);
-                    if (newPatient == null)
-                    {
-                        Console.WriteLine("Failed to register new patient.");
-                    }
-                    // No es necesario agregar manualmente al diccionario ni lista porque ya se hizo dentro del método.
+                    patientService.Register(); // Usa la instancia
                     break;
 
                 case "2":
-                    PatientService.ListPatients(patientDict);
+                    patientService.ListPatients();
                     break;
 
                 case "3":
                     Console.Write("Enter the ID of the patient: ");
                     if (int.TryParse(Console.ReadLine(), out int id))
                     {
-                        PatientService.SearchPatientById(patientDict, id);
+                        patientService.SearchPatientById(id);
                     }
                     else
                     {
@@ -64,7 +54,7 @@ while (flag)
                         Console.Write("Enter age: ");
                         if (int.TryParse(Console.ReadLine(), out int searchAge))
                         {
-                            PatientService.SearchPatientByAgeOrSpecies(patientDict, searchAge, null);
+                            patientService.SearchPatientByAgeOrSpecies(searchAge, null);
                         }
                         else
                         {
@@ -75,21 +65,28 @@ while (flag)
                     {
                         Console.Write("Enter species: ");
                         string searchSpecies = Console.ReadLine();
-                        PatientService.SearchPatientByAgeOrSpecies(patientDict, null, searchSpecies);
+                        patientService.SearchPatientByAgeOrSpecies(null, searchSpecies);
                     }
                     else
                     {
                         Console.WriteLine("Invalid search option.");
                     }
                     break;
-
                 case "5":
-                    flag = false;
-                    Console.WriteLine("Thanks for using the system!");
+                    MenuConsola.VeterinaryServiceMenu();
+                    string option1 = Console.ReadLine();
+                    switch (option1)
+                    {
+                        case "1":
+                            break;
+                    }
+                    break;
+                case "6":
+                    break;
+                default:
+                    Console.WriteLine("Please enter a valid option");
                     break;
 
-                default:
-                    Console.WriteLine("Please input a valid option, try again.");
-                    break;
+
             }
         }

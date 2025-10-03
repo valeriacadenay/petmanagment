@@ -1,13 +1,12 @@
 namespace petmanagment.Models;
 
-public class Animal(string name, int age, string specie, string race, string symptoms)
+public class Animal(string name, int age, string specie, string race)
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public string Name { get; set; } = name;
     public int Age { get; set; } = age;
     public string Specie { get; set; } = specie;
     public string Race { get; set; } = race;
-    public string Symptoms { get; set; } = symptoms;
     
     public virtual void EmitSound()
     {

@@ -4,8 +4,8 @@
     {
         public Owner Owner { get; set; }
         
-        public Patient(string Name, int Age, string Specie, string Race,string symptoms , Owner owner)
-            : base(Name, Age, Specie, Race, symptoms)
+        public Patient(string Name, int Age, string Specie, string Race, Owner owner)
+            : base(Name, Age, Specie, Race)
         {
             Owner = owner;
         }
