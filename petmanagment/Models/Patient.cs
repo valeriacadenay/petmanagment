@@ -7,7 +7,7 @@
         public Patient(string Name, int Age, string Specie, string Race, Owner owner)
             : base(Name, Age, Specie, Race)
         {
-            Owner = owner;
+            this.Owner = owner;
         }
 
         public override void EmitSound()

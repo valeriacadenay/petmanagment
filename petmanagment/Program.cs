@@ -7,10 +7,10 @@ List<Patient> patients = new List<Patient>();
 Dictionary<int, Patient> patientDict = new Dictionary<int, Patient>();
 List<Owner> owners = new List<Owner>();
 
-// Crear servicio
-PatientService patientService = new PatientService(patients, patientDict, owners);
+// Contador para IDs
+int patientIdCounter = 1;
 
-// Mostrar título (asumiendo que ConsoleInterface.ShowTitle lo hace)
+// Mostrar título
 Console.WriteLine("Welcome to Pet Health Clinic");
 
 while (true)
@@ -23,44 +23,36 @@ while (true)
     switch (option)
     {
         case "1":
-            patientService.Register();
+            // Pasar las colecciones y el contador para registrar
+            PatientService.RegisterPatient(patients, patientDict, owners, ref patientIdCounter);
             break;
 
         case "2":
-            patientService.ListPatients();
+            PatientService.ListPatients(patients);
             break;
 
         case "3":
             Console.WriteLine("Enter the ID of the patient:");
-            int idPatient = Convert.ToInt32(Console.ReadLine());
-            
-            bool found = false;
-
-            foreach (var entry in patientDict)
+            if (int.TryParse(Console.ReadLine(), out int idPatient))
             {
-                if (entry.Key == idPatient)
+                if (patientDict.TryGetValue(idPatient, out Patient pat))
                 {
-                    Patient pat = entry.Value;
                     Console.WriteLine("=== Patient Found ===");
-                    Console.WriteLine($"ID: {pat.Id}");
+                    Console.WriteLine($"ID: {idPatient}");
                     Console.WriteLine($"Name: {pat.Name}");
                     Console.WriteLine($"Age: {pat.Age}");
-                    found = true;
-                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Patient not found.");
                 }
             }
-
-            if (!found)
+            else
             {
-                Console.WriteLine("Patient not found.");
+                Console.WriteLine("Invalid ID format.");
             }
-        else
-        {
-            Console.WriteLine("Invalid ID format.");
-        }
-        break;
-
-
+            break;
+/*
         case "4":
             Console.WriteLine("Search by:");
             Console.WriteLine("1. Age");
@@ -73,7 +65,7 @@ while (true)
                 Console.Write("Enter age: ");
                 if (int.TryParse(Console.ReadLine(), out int searchAge))
                 {
-                    patientService.SearchPatientByAgeOrSpecies(searchAge, null);
+                    PatientService.SearchPatientByAgeOrSpecies(patients, searchAge, null);
                 }
                 else
                 {
@@ -84,13 +76,14 @@ while (true)
             {
                 Console.Write("Enter species: ");
                 string searchSpecies = Console.ReadLine();
-                patientService.SearchPatientByAgeOrSpecies(null, searchSpecies);
+                PatientService.SearchPatientByAgeOrSpecies(patients, null, searchSpecies);
             }
             else
             {
                 Console.WriteLine("Invalid search option.");
             }
             break;
+
         case "5":
             MenuConsola.VeterinaryServiceMenu();
             string option1 = Console.ReadLine();
@@ -98,21 +91,29 @@ while (true)
             {
                 case "1":
                     Console.WriteLine("Enter the ID of the patient:");
-
-                    /*foreach (var pat in patientDict)
+                    if (int.TryParse(Console.ReadLine(), out int vetPatientId))
                     {
-                        if (idPatient == )
+                        if (patientDict.TryGetValue(vetPatientId, out Patient vetPat))
                         {
-                            
+                            // Aquí va la lógica que deseas implementar
+                            Console.WriteLine($"Performing veterinary service for patient {vetPat.Name} {vetPat.LastName}");
                         }
-                    }*/
+                        else
+                        {
+                            Console.WriteLine("Patient not found.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid ID format.");
+                    }
                     break;
                 default:
                     Console.WriteLine("Invalid option.");
                     break;
-                    
             }
             break;
+            */
 
         case "0":
             Console.WriteLine("Goodbye!");
