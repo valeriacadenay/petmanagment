@@ -2,12 +2,16 @@
 {
     public class Patient : Animal
     {
-        public Owner Owner { get; set; }
         
-        public Patient(string Name, int Age, string Specie, string Race, Owner owner)
-            : base(Name, Age, Specie, Race)
+        public Patient(string Name, int Age, string Specie, string race, string ownerIdentification)
+            : base(Name, Age, Specie, race, ownerIdentification)
         {
-            this.Owner = owner;
+            
+        }
+
+        public override void ShowInformation()
+        {
+            Console.WriteLine($"Name: {this.Name}, Age {this.Age}, Specie {this.Specie}, Race {this.Race}, OwnerIdentification {this.OwnerIdentification}");
         }
 
         public override void EmitSound()

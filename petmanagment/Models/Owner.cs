@@ -1,17 +1,30 @@
 namespace petmanagment.Models
+
 {
     public class Owner : Person
     {
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
+        public List<Patient> Pets { get; set; } = new(); 
 
-        public Owner(string Name, string lastName, int age, string email, string Phone) : base(Name, age)
+        public Owner(string Name, string lastName, string identification,int age, string email, string Phone) : base(Name, lastName, identification, email, Phone, age)
         {
-            this.LastName = lastName;
-            this.Email = email;
-            this.Phone = Phone;
+            
         }
         
+        public void ShowPets()
+        {
+            Console.WriteLine($"Pets of {this.Name}:");
+            if (this.Pets.Count == 0)
+            {
+                Console.WriteLine("The user doesn't have any pet ");
+                return;
+            }
+
+            foreach (var pet in this.Pets)
+            {
+                Console.Write(" ------------------------------");
+                pet.ShowInformation();
+                
+            }
+        }
     }
 }

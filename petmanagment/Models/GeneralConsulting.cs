@@ -14,7 +14,7 @@ public abstract class GeneralConsulting : VeterinaryService
         this.ReasonForVisit = reason;
         this.Symptoms = symptoms;
         this.ServiceDate = DateTime.Now;
-        this.Cost = 150.00m; // Precio estándar de consulta
+        this.Cost = 150.00m;
     }
 
 }
