@@ -1,7 +1,7 @@
 namespace petmanagment.Interfaces;
 
-public interface IRegistrable
+public interface IRegistrable <T>
 {
-    void Register();
+    void Register(T entity);
     
 }
