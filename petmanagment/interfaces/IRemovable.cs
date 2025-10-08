@@ -2,5 +2,5 @@
 
 public interface IRemovable
 {
-    void Remove(string id);
+    void Remove(string identification);
 }

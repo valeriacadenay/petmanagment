@@ -9,7 +9,6 @@ namespace petmanagment.Models
         {
             
         }
-        
         public void ShowPets()
         {
             Console.WriteLine($"Pets of {this.Name}:");
@@ -25,6 +24,16 @@ namespace petmanagment.Models
                 pet.ShowInformation();
                 
             }
+        }
+
+        public void addPet(Patient pet)
+        {
+            this.Pets.Add(pet);
+        }
+
+        public void removePet(string id)
+        {
+            this.Pets = this.Pets.Where((pet) => !pet.Id.Equals(id)).ToList();
         }
     }
 }
