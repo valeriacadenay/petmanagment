@@ -19,9 +19,9 @@ public class OwnerRepository : IRegistrable<Owner>, IReadable<Owner>, IEditable<
         return DataBase.owners;
     }
 
-    public Owner? GetById(string identification)
+    public Owner? GetById(string id)
     {
-        return DataBase.owners.Find((owner => owner.Identification.ToString() == identification));
+        return DataBase.owners.Find((owner => owner.Identification.ToString() == id));
     }
 
     public Owner? GetByName(string name)
@@ -34,9 +34,9 @@ public class OwnerRepository : IRegistrable<Owner>, IReadable<Owner>, IEditable<
         DataBase.owners = DataBase.owners.Select((own => own.Identification == identification ? Owner : own)).ToList();
     }
     
-    public void Remove(string identification)
+    public void Remove(string id)
     {
-        DataBase.owners = DataBase.owners.Where((owner => owner.Identification != identification)).ToList();
+        DataBase.owners = DataBase.owners.Where((owner => owner.Id.ToString() != id)).ToList();
     }
 
     public void AddPet(Patient pet)
