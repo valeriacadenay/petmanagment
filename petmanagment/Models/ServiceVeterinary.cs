@@ -1,9 +1,11 @@
+using petmanagment.Enum;
+
 namespace petmanagment.Models
 {
     public class ServiceVeterinary
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
+        public ServicesType ServiceType { get; set; }
         public Veterinary Veterinary { get; set; }
         public Patient Patient { get; set; }
         public DateTime ServiceDate { get; set; }
@@ -11,7 +13,7 @@ namespace petmanagment.Models
         public string ReasonForVisit { get; set; }
         public string Symptoms { get; set; }
 
-        public ServiceVeterinary(string Name,
+        public ServiceVeterinary(ServicesType servicesType,
             Patient patient,
             Veterinary veterinary,
             DateTime serviceDate,
@@ -20,7 +22,7 @@ namespace petmanagment.Models
             string symptoms)
         {
             Id = Guid.NewGuid();
-            this.Name = Name;
+            this.ServiceType = servicesType;
             Veterinary = veterinary;
             Patient = patient;
             ServiceDate = serviceDate;
