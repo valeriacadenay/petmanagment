@@ -1,8 +1,10 @@
+using petmanagment.Interfaces;
+
 namespace petmanagment.Services;
 
-public class Vaccination : VeterinaryService
+public class Vaccination : IAtendible
 {
-    public override void Attend()
+    public void Attend()
     {
         Console.WriteLine("Aplicando vacunación al paciente.");
     }

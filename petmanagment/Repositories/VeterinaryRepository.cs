@@ -21,7 +21,7 @@ public class VeterinaryRepository :IRegistrable<Veterinary>, IReadable<Veterinar
 
     public Veterinary? GetById(string id)
     {
-        return DataBase.veterinarys.Find((veterinary => veterinary.Identification.ToString() == id));
+        return DataBase.veterinarys.Find((veterinary => veterinary.Id.ToString() == id));
     }
 
     public Veterinary? GetByName(string name)

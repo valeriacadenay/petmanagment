@@ -2,5 +2,5 @@
 
 public interface IEditable <T>
 {
-    void Edit(string id, T entity);
+    void Edit(string identification, T entity);
 }

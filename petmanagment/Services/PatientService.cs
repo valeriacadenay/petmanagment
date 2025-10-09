@@ -1,6 +1,6 @@
 ﻿using petmanagment.Models;
 
-
+/*
 namespace petmanagment.Services
 {
     public class PatientService
@@ -164,3 +164,4 @@ namespace petmanagment.Services
         
     }
 }
+*/
