@@ -1,167 +1,225 @@
 ﻿using petmanagment.Models;
+using petmanagment.Repositories;
 
-/*
+
 namespace petmanagment.Services
 {
     public class PatientService
     {
-        // Método para registrar un nuevo paciente y devolverlo
-        public static Patient RegisterPatient(
-            List<Patient> patientList, 
-            Dictionary<int, Patient> patientDict, 
-            List<Owner> owners, 
-            ref int patientIdCounter)
+        private static PatientRepository _patientRepository = new PatientRepository();
+
+        public static void CreatePatient(string name,
+            int age,
+            string specie,
+            string breed,
+            string ownerId)
         {
+            if (string.IsNullOrEmpty(name) || age <= 0 || age > 100 ||
+                string.IsNullOrEmpty(specie) || string.IsNullOrEmpty(breed) ||
+                string.IsNullOrEmpty(ownerId))
+            {
+                Console.WriteLine("Invalid input. Please provide valid patient details.");
+                return;
+            }
+
             try
             {
-                Console.Write("Enter patient's first name: ");
-                string name = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(name))
-                {
-                    Console.WriteLine("Name cannot be empty");
-                    return null;
-                }
-
-                Console.Write("Enter patient's age: ");
-                if (!int.TryParse(Console.ReadLine(), out int age) || age <= 0)
-                {
-                    Console.WriteLine("Please enter a valid age");
-                    return null;
-                }
-
-                Console.Write("Enter patient's specie: ");
-                string specie = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(specie))
-                {
-                    Console.WriteLine("Specie cannot be empty");
-                    return null;
-                }
-
-                Console.Write("Enter patient's race: ");
-                string race = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(race))
-                {
-                    Console.WriteLine("Race cannot be empty");
-                    return null;
-                }
-
-                Console.Write("Enter patient's symptoms: ");
-                string symptoms = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(symptoms))
-                {
-                    Console.WriteLine("Symptoms cannot be empty");
-                    return null;
-                }
-
-                Console.WriteLine("-------------------------------------------");
-                Console.WriteLine("       Enter owner's information:");
-
-                Console.Write("Owner's first name: ");
-                string ownerName = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(ownerName))
-                {
-                    Console.WriteLine("Owner's first name cannot be empty");
-                    return null;
-                }
-
-                Console.Write("Owner's last name: ");
-                string ownerLastName = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(ownerLastName))
-                {
-                    Console.WriteLine("Owner's last name cannot be empty");
-                    return null;
-                }
-
-                Console.Write("Owner's age: ");
-                if (!int.TryParse(Console.ReadLine(), out int ownerAge) || ownerAge <= 0)
-                {
-                    Console.WriteLine("Please enter a valid owner age.");
-                    return null;
-                }
-
-                Console.Write("Owner's email: ");
-                string ownerEmail = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(ownerEmail))
-                {
-                    Console.WriteLine("Owner's email cannot be empty");
-                    return null;
-                }
-
-                Console.Write("Owner's phone: ");
-                string ownerPhone = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(ownerPhone))
-                {
-                    Console.WriteLine("Owner's phone cannot be empty");
-                    return null;
-                }
-
-                // Verificar si el dueño ya existe por email
-                Owner existingOwner = owners.FirstOrDefault(o => 
-                    o.Email.Equals(ownerEmail, StringComparison.OrdinalIgnoreCase));
-
-                Owner owner;
-                if (existingOwner != null)
-                {
-                    owner = existingOwner;
-                }
-                else
-                {
-                    owner = new Owner(ownerName, ownerLastName, ownerAge, ownerEmail, ownerPhone);
-                    owners.Add(owner);
-                }
-
-                // Asignar ID y crear paciente
-                int newPatientId = patientIdCounter++;
-                Patient newPatient = new Patient(name, age, specie, race, owner);
-
-                // Agregar a las colecciones
-                patientList.Add(newPatient);
-                patientDict[newPatientId] = newPatient;
-
-                Console.WriteLine($"Patient registered successfully with ID: {newPatientId}");
-                Console.Write("The animal makes a generic sound: ");
-                newPatient.EmitSound();
-
-                return newPatient;
+                Patient newPatient = new Patient(name, age, specie, breed, ownerId);
+                _patientRepository.Register(newPatient);
+                Console.WriteLine("Patient created successfully.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Error creating patient: {ex.Message}");
+            }
+        }
+
+        public static List<Patient> GetAllPatients()
+        {
+            try
+            {
+                return _patientRepository.GetAll();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error retrieving patients: {ex.Message}");
+                return [];
+            }
+        }
+
+        public static Patient? GetPatientById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                Console.WriteLine("Invalid Id");
+                return null;
+            }
+
+            try
+            {
+                return _patientRepository.GetById(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving patient by Id: {ex.Message}");
                 return null;
             }
         }
 
-        // Métodos ListPatients y SearchPatientByName quedan igual
-        public static void ListPatients(List<Patient> patientList)
+        public static Patient? GetPatientByName(string name)
         {
-            if (patientList.Count == 0)
+            if (string.IsNullOrEmpty(name))
             {
-                Console.WriteLine("There are no patients registered.");
+                Console.WriteLine("Invalid Name");
+                return null;
+            }
+
+            try
+            {
+                return _patientRepository.GetByName(name);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving patient by Name: {ex.Message}");
+                return null;
+            }
+        }
+
+        public static void UpdatePatientName(string id, string newName)
+        {
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(newName))
+            {
+                Console.WriteLine("Invalid Id or Name");
                 return;
             }
 
-            Console.WriteLine("List of patients:");
-            foreach (var patient in patientList)
+            try
             {
-                Console.WriteLine($"{patient.Name}, Age: {patient.Age}, Specie: {patient.Specie}, Race: {patient.Race}");
+                var patient = _patientRepository.GetById(id);
+                if (patient == null)
+                {
+                    Console.WriteLine("Patient not found.");
+                    return;
+                }
+
+                patient.Name = newName;
+                _patientRepository.UpdatePatientName(newName);
+                Console.WriteLine("Patient name updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating patient name: {ex.Message}");
             }
         }
 
-        public static void SearchPatientByName(List<Patient> patientList, string name)
+        public static void UpdatePatientAge(string id, int newAge)
         {
-            var patient = patientList.FirstOrDefault(p =>
-                string.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase));
-
-            if (patient != null)
+            if (string.IsNullOrEmpty(id) || newAge <= 0 || newAge > 100)
             {
-                Console.WriteLine($"Patient found: {patient.Name}, Age: {patient.Age}");
+                Console.WriteLine("Invalid Id or Age");
+                return;
             }
-            else
+
+            try
             {
-                Console.WriteLine("Patient not found");
+                var patient = _patientRepository.GetById(id);
+                if (patient == null)
+                {
+                    Console.WriteLine("Patient not found.");
+                    return;
+                }
+
+                patient.Age = newAge;
+                _patientRepository.UpdatePatientAge(newAge);
+                Console.WriteLine("Patient age updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating patient age: {ex.Message}");
             }
         }
-        
+
+        public static void UpdatePatientSpecie(string id, string newSpecie)
+        {
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(newSpecie))
+            {
+                Console.WriteLine("Invalid Id or Specie");
+                return;
+            }
+
+            try
+            {
+                var patient = _patientRepository.GetById(id);
+                if (patient == null)
+                {
+                    Console.WriteLine("Patient not found.");
+                    return;
+                }
+
+                patient.Specie = newSpecie;
+                _patientRepository.UpdatePatientSpecie(newSpecie);
+                Console.WriteLine("Patient specie updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating patient specie: {ex.Message}");
+            }
+        }
+
+        public static void UpdatePatientRace(string id, string newRace)
+        {
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(newRace))
+            {
+                Console.WriteLine("Invalid Id or Specie");
+                return;
+            }
+
+            try
+            {
+                var patient = _patientRepository.GetById(id);
+                if (patient == null)
+                {
+                    Console.WriteLine("Patient not found.");
+                    return;
+                }
+
+                patient.Race = newRace;
+                _patientRepository.UpdatePatientSpecie(newRace);
+                Console.WriteLine("Patient specie updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating patient specie: {ex.Message}");
+            }
+
+        }
+
+        public void DeletePatient(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                Console.WriteLine("Invalid Id");
+                return;
+            }
+
+            try
+            {
+                var patient = _patientRepository.GetById(id);
+                if (patient == null)
+                {
+                    Console.WriteLine("Patient not found.");
+                    return;
+                }
+
+                _patientRepository.Remove(id);
+                Console.WriteLine("Patient deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting patient: {ex.Message}");
+            }
+
+        }
     }
 }
-*/
+
