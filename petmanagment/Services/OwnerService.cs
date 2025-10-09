@@ -84,40 +84,110 @@ public class OwnerService
         }
     }
 
-    public static void UpdateOwner(string id,
-                                   string newName, 
-                                   string newLastName,
-                                   string Identification,
-                                   string newEmail,
-                                   string newPhone,
-                                   int newAge)
+    public static void UpdateOwnerName(string id, string newName)
     {
-        if(string.IsNullOrEmpty(id) || string.IsNullOrEmpty(newName) || string.IsNullOrEmpty(newLastName) || string.IsNullOrEmpty(Identification) || 
-           string.IsNullOrEmpty(newEmail) || string.IsNullOrEmpty(newPhone) || 
-           newAge <= 0 || newAge > 100)
+        if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(newName))
         {
-            Console.WriteLine("Invalid input. Please provide valid owner details.");
-            return;
+            Console.WriteLine($"Invalid Id or Name");
         }
 
         try
         {
-            Owner updatedOwner = new Owner(newName, newLastName, Identification, newAge, newEmail, newPhone);
-            _ownerRepository.Edit(Identification, updatedOwner);
-            Console.WriteLine("Owner updated successfully.");
+            Owner? updateOwner = _ownerRepository.GetById(id);
+            if (updateOwner == null)
+            {
+                Console.WriteLine("Owner not found.");
+            }
+
+            updateOwner.Name = newName;
+            _ownerRepository.UpdateOwnerName(newName);
+            Console.WriteLine("Owner name updated successfully.");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error updating owner: {ex.Message}");
+            Console.WriteLine($"Error Updating the owner: {ex.Message}");
         }
     }
 
+    public static void UpdateOwnerLastName(string id, string newLastName)
+    {
+        if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(newLastName))
+        {
+            Console.WriteLine($"Invalid Id or Last Name");
+        }
+
+        try
+        {
+            Owner? updateOwner = _ownerRepository.GetById(id);
+            if (updateOwner == null)
+            {
+                Console.WriteLine("Owner not found.");
+            }
+
+            updateOwner.Name = newLastName;
+            _ownerRepository.UpdateOwnerName(newLastName);
+            Console.WriteLine("Owner Last name updated successfully.");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    public static void UpdateOwnerEmail(string id, string newEmail)
+    {
+        if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(newEmail))
+        {
+            Console.WriteLine($"Invalid Id or Email");
+        }
+
+        try
+        {
+            Owner? updateOwner = _ownerRepository.GetById(id);
+            if (updateOwner == null)
+            {
+                Console.WriteLine("Owner not found.");
+            }
+
+            updateOwner.Email = newEmail;
+            _ownerRepository.updateOwnerEmail(newEmail);
+            Console.WriteLine("Owner Email updated successfully.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error Updating the owner: {ex.Message}");
+        }
+    }
+    public static void UpdateOwnerPhone(string id, string newPhone)
+    {
+        if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(newPhone))
+        {
+            Console.WriteLine($"Invalid Id or Phone");
+        }
+
+        try
+        {
+            Owner? updateOwner = _ownerRepository.GetById(id);
+            if (updateOwner == null)
+            {
+                Console.WriteLine("Owner not found.");
+            }
+
+            updateOwner.Phone = newPhone;
+            _ownerRepository.updateOwnerPhone(newPhone);
+            Console.WriteLine("Owner Phone updated successfully.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error Updating the owner: {ex.Message}");
+        }
+    }
+    
     public static void DeleteOwner(string id)
     {
         if (string.IsNullOrEmpty(id))
         {
             Console.WriteLine("Invalid Id");
-            return;
         }
         try
         {
