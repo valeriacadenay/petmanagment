@@ -39,56 +39,37 @@ public class MenuConsola
                 Environment.Exit(0);
                 break;
             case "1":
-                OwnerService.CreateOwner();
+                string name = ConsoleInputHelper.ReadString("Enter client name");
+                string lastName = ConsoleInputHelper.ReadString("Enter client last name");
+                string identification = ConsoleInputHelper.ReadString("Enter identification");
+                string email = ConsoleInputHelper.ReadString("Enter email");
+                string phone = ConsoleInputHelper.ReadString("Enter phone number");
+                int age = ConsoleInputHelper.ReadInt("Enter age");
+
+                OwnerService.CreateOwner(name, lastName, identification, email, phone, age);
                 break;
             case "2":
                 OwnerService.GetOwners();
                 break;
             case "3":
-                OwnerService.GetOwnerByName();
+                string searchName = ConsoleInputHelper.ReadString("Enter client name to search");
+                var owner = OwnerService.GetOwnerByName(searchName);
+
+                if (owner != null)
+                    Console.WriteLine($"Client found: {owner.Name} {owner.LastName}, Email: {owner.Email}, Phone: {owner.Phone}");
+                else
+                    Console.WriteLine("Client not found.");
                 break;
             case "4":
-                OwnerService.
+                ShowUpdateOwnerMenu.Show();
                 break;
             case "5":
-                ClientService.DeleteClient();
+                string id = ConsoleInputHelper.ReadString("Enter the client ID");
+                OwnerService.DeleteOwner(id);
                 break;
-            case "6":
-                PatientService.RegisterPatient();
-                break;
-            case "7":
-                PatientService.ListPatients();
-                break;
-            case "8":
-                PatientService.UpdatePatientInformation();
-                break;
-            case "10":
-                PatientService.SearchPatientById();
-                break;
-            case "11":
-                PatientService.DeletePatient();
-                break;
-            case "12":
-                VeterinaryService.RegisterVeterinary();
-                break;
-            case "13":
-                VeterinaryService.ListVeterinaries();
-                break;
-            case "14":
-                VeterinaryService.SearchVeterinaryById();
-                break;
-            case "15":
-                VeterinaryService.UpdateVeterinaryInformation();
-                break;
-            case "16":
-                VeterinaryService.DeleteVeterinary();
-                break;
-            case "17":
-                ServiceVeterinaryService.RequestVeterinaryService();
-                break;
-            default:
-                Console.WriteLine("Invalid option. Please try again.");
-                break;
+                
+                
+            
         }
     }
     
