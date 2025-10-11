@@ -9,20 +9,21 @@ public class Person
     public string Email { get; set; }
     public string Phone { get; set; }
     public int Age { get; set; }
-    
+
     public Person(string name, string lastName, string identification, string email, string phone, int age)
     {
         Id = Guid.NewGuid();
-        this.Name = name;
-        this.LastName = lastName;
-        this.Identification = identification;
-        this.Email = email;
-        this.Phone = phone;
-        this.Age = age;
+        Name = name;
+        LastName = lastName;
+        Identification = identification;
+        Email = email;
+        Phone = phone;
+        Age = age;
     }
 
     public virtual void ShowInformation()
     {
-        Console.WriteLine($"Name: {this.Name} {this.LastName}, Identification: {this.Identification}, Email: {this.Email}, Phone: {this.Phone}");
+        Console.WriteLine(
+            $"Name: {Name} {LastName}, Identification: {Identification}, Email: {Email}, Phone: {Phone}");
     }
 }

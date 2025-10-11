@@ -194,7 +194,7 @@ namespace petmanagment.Services
 
         }
 
-        public void DeletePatient(string id)
+        public static void DeletePatient(string id)
         {
             if (string.IsNullOrEmpty(id))
             {

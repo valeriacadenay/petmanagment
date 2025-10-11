@@ -12,11 +12,11 @@ public class OwnerService
                                    string identification,
                                    string email,
                                    string phone,
-                                   int Age)
+                                   int age)
     {
         if(string.IsNullOrEmpty(name) || string.IsNullOrEmpty(lastName) || 
            string.IsNullOrEmpty(identification) || string.IsNullOrEmpty(email) || 
-           string.IsNullOrEmpty(phone) || Age <= 0 || Age >100 )
+           string.IsNullOrEmpty(phone) || age <= 0 || age >100 )
         {
             Console.WriteLine("Invalid input. Please provide valid owner details.");
             return;
@@ -24,7 +24,7 @@ public class OwnerService
 
         try
         {
-            Owner newOwner = new Owner(name, lastName, identification, Age, email, phone);
+            Owner newOwner = new Owner(name, lastName, identification, email, phone,age);
             _ownerRepository.Register(newOwner);
             Console.WriteLine("Owner created successfully.");
         }

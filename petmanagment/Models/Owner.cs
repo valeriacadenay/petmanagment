@@ -3,12 +3,17 @@ namespace petmanagment.Models
 {
     public class Owner : Person
     {
-        public List<Patient> Pets { get; set; } = new(); 
-
-        public Owner(string Name, string lastName, string identification,int age, string email, string Phone) : base(Name, lastName, identification, email, Phone, age)
+        public List<Patient> Pets { get; set; } = []; 
+        public Owner(
+            string name, 
+            string lastName, 
+            string identification, 
+            string email, 
+            string phone, 
+            int age) : base(name, lastName, identification, email, phone, age)
         {
-            
         }
+        
         public void ShowPets()
         {
             Console.WriteLine($"Pets of {this.Name}:");

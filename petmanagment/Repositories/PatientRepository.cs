@@ -10,26 +10,26 @@ public class PatientRepository : IRegistrable<Patient>, IReadable<Patient>, IUpd
     }
     public void Register(Patient patient)
     {
-        DataBase.patients.Add(patient);
+        DataBase.Patients.Add(patient);
     }
     
     public List<Patient> GetAll(){
-        return DataBase.patients;
+        return DataBase.Patients;
     }
 
     public Patient? GetById(string identification)
     {
-        return DataBase.patients.Find((patient => patient.Id.ToString() == identification));
+        return DataBase.Patients.Find((patient => patient.Id.ToString() == identification));
     }
 
     public Patient? GetByName(string name)
     {
-        return DataBase.patients.Find((patient => patient.Name == name));
+        return DataBase.Patients.Find((patient => patient.Name == name));
     }
     
     public void UpdatePatientName(string newName)
     {
-        DataBase.patients = DataBase.patients.Select((patient) =>
+        DataBase.Patients = DataBase.Patients.Select((patient) =>
         {
             if (patient.Name == newName)
             {
@@ -43,7 +43,7 @@ public class PatientRepository : IRegistrable<Patient>, IReadable<Patient>, IUpd
 
     public void UpdatePatientAge(int newAge)
     {
-        DataBase.patients = DataBase.patients.Select((patient) =>
+        DataBase.Patients = DataBase.Patients.Select((patient) =>
         {
             if (patient.Age == newAge)
             {
@@ -56,7 +56,7 @@ public class PatientRepository : IRegistrable<Patient>, IReadable<Patient>, IUpd
     }
     public void UpdatePatientSpecie(string newSpecie)
     {
-        DataBase.patients = DataBase.patients.Select((patient) =>
+        DataBase.Patients = DataBase.Patients.Select((patient) =>
         {
             if (patient.Specie == newSpecie)
             {
@@ -70,7 +70,7 @@ public class PatientRepository : IRegistrable<Patient>, IReadable<Patient>, IUpd
 
     public void UpdatePatientRace(string newRace)
     {
-        DataBase.patients = DataBase.patients.Select((patient =>
+        DataBase.Patients = DataBase.Patients.Select((patient =>
         {
             if (patient.Race == newRace)
             {
@@ -85,6 +85,6 @@ public class PatientRepository : IRegistrable<Patient>, IReadable<Patient>, IUpd
 
     public void Remove(string id)
     {
-        DataBase.patients = DataBase.patients.Where((patient => patient.Id.ToString() != id)).ToList();
+        DataBase.Patients = DataBase.Patients.Where((patient => patient.Id.ToString() != id)).ToList();
     }
 }

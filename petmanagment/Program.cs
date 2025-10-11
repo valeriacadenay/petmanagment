@@ -1,6 +1,4 @@
-﻿using petmanagment.Models.Interface;
+﻿using petmanagment.Utils;
+MenuConsola.ShowMenu();
 
-while (true)
-{
-    MenuConsola.ShowMenu();
-}
+

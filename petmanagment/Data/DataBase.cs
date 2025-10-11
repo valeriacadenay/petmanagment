@@ -1,13 +1,22 @@
 ﻿using petmanagment.Models;
-using petmanagment.Repositories;
 
 namespace petmanagment.Data;
 
 
-public class DataBase
+public static class DataBase
 {
-    public static List<Patient> patients = [];
-    public static List<Owner> owners = [];
-    public static List<Veterinary> veterinarys = [];
-    public static List<ServiceVeterinary> services = [];
+    public static List<Owner> Owners = [];
+    public static List<Patient> Patients = new List<Patient>();
+    public static List<Veterinary> Veterinarys = new List<Veterinary>();
+    public static List<ServiceVeterinary> Services = new List<ServiceVeterinary>();
+
+
+    static DataBase()
+    {
+        var owner1 = new Owner("John", "Doe", "123456789", "John@email.com", "12345", 45);
+        var owner2 = new Owner("John", "Doe", "123456789", "John@email.com", "12345",20);
+        
+        Owners.Add(owner1);
+        Owners.Add(owner2);
+    }
 }

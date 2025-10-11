@@ -6,32 +6,28 @@ namespace petmanagment.Repositories;
 
 public class OwnerRepository : IRegistrable<Owner>, IReadable<Owner>, IUpdatePerson, IRemovable 
 {
-    public OwnerRepository()
-    {
-    }
-
     public void Register(Owner owner)
     {
-        DataBase.owners.Add(owner);
+        DataBase.Owners.Add(owner);
     }
     
     public List<Owner> GetAll(){
-        return DataBase.owners;
+        return DataBase.Owners;
     }
 
     public Owner? GetById(string id)
     {
-        return DataBase.owners.Find((owner => owner.Identification.ToString() == id));
+        return DataBase.Owners.Find((owner => owner.Identification.ToString() == id));
     }
 
     public Owner? GetByName(string name)
     {
-        return DataBase.owners.Find((owner => owner.Name == name));
+        return DataBase.Owners.Find((owner => owner.Name == name));
     }
 
     public void UpdateOwnerName(string newName)
     {
-        DataBase.owners = DataBase.owners.Select((owner) =>
+        DataBase.Owners = DataBase.Owners.Select((owner) =>
         {
             if (owner.Name == newName)
             {
@@ -44,7 +40,7 @@ public class OwnerRepository : IRegistrable<Owner>, IReadable<Owner>, IUpdatePer
     }
     public void UpdateOwnerLastName(string LastName)
     {
-        DataBase.owners = DataBase.owners.Select((owner) =>
+        DataBase.Owners = DataBase.Owners.Select((owner) =>
         {
             if (owner.LastName == LastName)
             {
@@ -58,7 +54,7 @@ public class OwnerRepository : IRegistrable<Owner>, IReadable<Owner>, IUpdatePer
 
     public void updateOwnerEmail(string email)
     {
-        DataBase.owners = DataBase.owners.Select((owner) =>
+        DataBase.Owners = DataBase.Owners.Select((owner) =>
         {
             if (owner.Email == email)
             {
@@ -72,7 +68,7 @@ public class OwnerRepository : IRegistrable<Owner>, IReadable<Owner>, IUpdatePer
 
     public void updateOwnerPhone(string phone)
     {
-        DataBase.owners = DataBase.owners.Select((owner) =>
+        DataBase.Owners = DataBase.Owners.Select((owner) =>
         {
             if (owner.Phone == phone)
             {
@@ -86,7 +82,7 @@ public class OwnerRepository : IRegistrable<Owner>, IReadable<Owner>, IUpdatePer
 
     public void updateOwnerIdentification(string identification)
     {
-        DataBase.owners = DataBase.owners.Select((owner) =>
+        DataBase.Owners = DataBase.Owners.Select((owner) =>
         {
             if (owner.Identification == identification)
             {
@@ -99,25 +95,26 @@ public class OwnerRepository : IRegistrable<Owner>, IReadable<Owner>, IUpdatePer
 
     public void updateOwnerAge(int age)
     {
-        DataBase.owners = DataBase.owners.Select((owner =>
+        DataBase.Owners.Select((owner =>
         {
             if (owner.Age == age)
             {
                 owner.Age = age;
                 return owner;
             }
+
             return owner;
-        })).ToList();
+        }));
     }
 
     public void Remove(string id)
     {
-        DataBase.owners = DataBase.owners.Where((owner => owner.Id.ToString() != id)).ToList();
+        DataBase.Owners.Where((owner => owner.Id.ToString() != id));
     }
 
     public void AddPet(Patient pet)
     {
-        DataBase.owners = DataBase.owners.Select((owner) =>
+        DataBase.Owners = DataBase.Owners.Select((owner) =>
         {
             if (owner.Identification == pet.OwnerIdentification)
             {
@@ -131,7 +128,7 @@ public class OwnerRepository : IRegistrable<Owner>, IReadable<Owner>, IUpdatePer
 
     public void removePet(Patient pet)
     {
-        DataBase.owners = DataBase.owners.Select((owner) =>
+        DataBase.Owners = DataBase.Owners.Select((owner) =>
         {
             if (owner.Pets.Contains(pet))
             {
