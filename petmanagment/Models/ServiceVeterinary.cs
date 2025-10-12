@@ -5,7 +5,7 @@ namespace petmanagment.Models
     public class ServiceVeterinary
     {
         public Guid Id { get; set; }
-        public ServicesType ServiceType { get; set; }
+        public string ServiceType { get; set; }
         public Veterinary Veterinary { get; set; }
         public Patient Patient { get; set; }
         public DateTime ServiceDate { get; set; }
@@ -13,7 +13,7 @@ namespace petmanagment.Models
         public string ReasonForVisit { get; set; }
         public string Symptoms { get; set; }
 
-        public ServiceVeterinary(ServicesType servicesType,
+        public ServiceVeterinary(String servicesType,
             Patient patient,
             Veterinary veterinary,
             DateTime serviceDate,

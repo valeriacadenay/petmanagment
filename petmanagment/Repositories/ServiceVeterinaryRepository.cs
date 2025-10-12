@@ -32,6 +32,6 @@ public class ServiceVeterinaryRepository : IServiceVeterinary
 
     public void Delete(Guid id)
     {
-        DataBase.Services = DataBase.Services.Where((serv => serv.Id == id)).ToList();
+        DataBase.Services.Where((serv => serv.Id == id));
     }
 }

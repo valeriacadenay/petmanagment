@@ -8,7 +8,7 @@ public class ServiceVeterinaryService
 {
     private static ServiceVeterinaryRepository _veterinaryService = new ServiceVeterinaryRepository();
     
-    public void CreateServiceVeterinary(ServicesType servicesType,
+    public void CreateServiceVeterinary(string servicesType,
                                         Patient patient,
                                         Veterinary veterinary,
                                         DateTime serviceDate,

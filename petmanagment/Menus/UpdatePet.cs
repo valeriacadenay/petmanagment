@@ -1,8 +1,9 @@
-using petmanagment.Services;
+﻿using petmanagment.Services;
+using petmanagment.Utils;
 
-namespace petmanagment.Models.Interface;
+namespace petmanagment.Menus;
 
-public class ShowUpdatePatientMenu
+public class UpdatePet
 {
     public static void Show()
     {
@@ -41,5 +42,4 @@ public class ShowUpdatePatientMenu
                 break;
         }
     }
-
 }

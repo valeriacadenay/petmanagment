@@ -1,13 +1,14 @@
 ﻿using petmanagment.Services;
+using petmanagment.Utils;
 
-namespace petmanagment.Models.Interface;
+namespace petmanagment.Menus;
 
-public class ShowUpdateOwnerMenu
+public static class UpdateOwner
 {
     public static void Show()
     {
         Console.WriteLine("\n--- UPDATE CLIENT INFORMATION ---");
-        string id = ConsoleInputHelper.ReadString("Enter Client ID");
+        string id = ConsoleInputHelper.ReadString("Enter Client Identification");
 
         Console.WriteLine("Select the field you want to update:");
         Console.WriteLine("1. Name");
@@ -44,5 +45,4 @@ public class ShowUpdateOwnerMenu
                 break;
         }
     }
-
 }

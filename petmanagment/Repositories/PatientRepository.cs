@@ -85,6 +85,6 @@ public class PatientRepository : IRegistrable<Patient>, IReadable<Patient>, IUpd
 
     public void Remove(string id)
     {
-        DataBase.Patients = DataBase.Patients.Where((patient => patient.Id.ToString() != id)).ToList();
+        DataBase.Patients.Where((patient => patient.Id.ToString() != id));
     }
 }

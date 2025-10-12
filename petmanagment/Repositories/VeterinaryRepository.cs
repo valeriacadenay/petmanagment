@@ -36,6 +36,6 @@ public class VeterinaryRepository :IRegistrable<Veterinary>, IReadable<Veterinar
     
     public void Remove(string id)
     {
-        DataBase.Veterinarys = DataBase.Veterinarys.Where((vet => vet.Id.ToString() != id)).ToList();
+        DataBase.Veterinarys.Where((vet => vet.Id.ToString() != id));
     }
 }

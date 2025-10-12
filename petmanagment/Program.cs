@@ -1,4 +1,3 @@
-﻿using petmanagment.Utils;
-MenuConsola.ShowMenu();
+﻿using petmanagment.Menus;
 
-
+MainMenu.Show();

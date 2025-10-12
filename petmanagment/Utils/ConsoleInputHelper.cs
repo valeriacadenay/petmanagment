@@ -1,6 +1,6 @@
-﻿namespace petmanagment.Models.Interface;
+﻿namespace petmanagment.Utils;
 
-public class ConsoleInputHelper
+public static class ConsoleInputHelper
 {
     public static string ReadString(string message)
     {
