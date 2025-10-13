@@ -6,6 +6,7 @@ namespace petmanagment.Services;
 public class OwnerService
 {
     private static OwnerRepository _ownerRepository = new OwnerRepository();
+    private static PatientRepository _petRepository = new PatientRepository();
     
     public static void CreateOwner(string name,
                                    string lastName,
@@ -64,6 +65,34 @@ public class OwnerService
             return null;
         }
     }
+    
+    //
+    public static List<Patient> GetPetsByOwnerIdentification(string ownerIdentification)
+    {
+        if (string.IsNullOrEmpty(ownerIdentification))
+        {
+            Console.WriteLine("Invalid owner identification.");
+            return [];
+        }
+
+        try
+        {
+            var pets = _ownerRepository.GetPetsByOwnerIdentification(ownerIdentification);
+
+            if (pets.Count == 0)
+            {
+                Console.WriteLine("This owner has no registered pets.");
+            }
+
+            return pets;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine($"Error retrieving pets: {ex.Message}");
+            return [];
+        }
+    }
+
 
     public static Owner? GetOwnerByName(string name)
     {
@@ -83,7 +112,7 @@ public class OwnerService
             return null;
         }
     }
-
+    
     public static void UpdateOwnerName(string id, string newName)
     {
         if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(newName))

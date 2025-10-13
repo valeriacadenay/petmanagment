@@ -19,11 +19,23 @@ public class OwnerRepository : IRegistrable<Owner>, IReadable<Owner>, IUpdatePer
     {
         return DataBase.Owners.Find((owner => owner.Identification.ToString() == id));
     }
+    
 
     public Owner? GetByName(string name)
     {
         return DataBase.Owners.Find((owner => owner.Name == name));
     }
+    
+    // Filtra todas las mascotas cuyo campo OwnerIdentification coincida
+    public List<Patient> GetPetsByOwnerIdentification(string ownerIdentification)
+    {
+        var pets = DataBase.Patients
+            .Where(p => p.OwnerIdentification == ownerIdentification)
+            .ToList();
+
+        return pets;
+    }
+
 
     public void UpdateOwnerName(string newName)
     {

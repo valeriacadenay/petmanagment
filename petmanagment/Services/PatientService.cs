@@ -4,7 +4,7 @@ using petmanagment.Repositories;
 
 namespace petmanagment.Services
 {
-    public class PatientService
+    public static class PatientService
     {
         private static PatientRepository _patientRepository = new PatientRepository();
 
@@ -220,6 +220,7 @@ namespace petmanagment.Services
             }
 
         }
+        
     }
 }
 

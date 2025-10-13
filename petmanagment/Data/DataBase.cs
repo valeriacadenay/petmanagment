@@ -9,6 +9,15 @@ public static class DataBase
     public static List<Patient> Patients = new List<Patient>();
     public static List<Veterinary> Veterinarys = new List<Veterinary>();
     public static List<ServiceVeterinary> Services = new List<ServiceVeterinary>();
+    public static List<string> AvailableServices = new List<string>
+    {
+        "Vacunación",
+        "Consulta General",
+        "Cirugía",
+        "Limpieza Dental",
+        "Atención de Emergencia"
+    };
+
 
 
     static DataBase()

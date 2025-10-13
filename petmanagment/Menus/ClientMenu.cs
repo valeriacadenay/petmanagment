@@ -55,10 +55,31 @@ namespace petmanagment.Menus
                         var owner = OwnerService.GetOwnerByName(searchName);
 
                         if (owner != null)
+                        {
                             Console.WriteLine($"Client found: {owner.Name} {owner.LastName}, Email: {owner.Email}, Phone: {owner.Phone}");
+
+                            // 🔹 Mostrar las mascotas del cliente
+                            Console.WriteLine($"\nPets of {owner.Name}:");
+                            var pets = OwnerService.GetPetsByOwnerIdentification(owner.Identification);
+
+                            if (pets.Count == 0)
+                            {
+                                Console.WriteLine("No pets registered for this owner.");
+                            }
+                            else
+                            {
+                                foreach (var pet in pets)
+                                {
+                                    Console.WriteLine($"- {pet.Name}, Species: {pet.Specie}, Age: {pet.Age} years");
+                                }
+                            }
+                        }
                         else
+                        {
                             Console.WriteLine("Client not found.");
+                        }
                         break;
+
                     case "4":
                         UpdateOwner.Show();
                         break;
