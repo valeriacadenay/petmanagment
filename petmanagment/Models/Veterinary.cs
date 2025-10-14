@@ -28,15 +28,4 @@ public class Veterinary : Person
         Console.WriteLine($"Name: {Name} {LastName} License: {ProfessionalLicense}, Specialty: {Specialty}, Experience: {YearsOfExperience} years");
     }
     
-    // Comportamientos específicos de un veterinario
-    public void Diagnose(Patient pet)
-    {
-        Console.WriteLine($"{Name} is diagnosing {pet.Name}...");
-    }
-
-    public void PrescribeTreatment(Patient pet, string treatment)
-    {
-        Console.WriteLine($"{Name} prescribed '{treatment}' for {pet.Name}.");
-    }
-    
 }
